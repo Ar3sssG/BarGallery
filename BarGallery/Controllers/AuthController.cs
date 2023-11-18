@@ -14,13 +14,13 @@ namespace BarGallery.Controllers
         {
         }
 
-        [HttpPost("Authenticate")]
+        [HttpPost]
         public async Task<IActionResult> Authenticate()
         {
             return Ok();
         }
 
-        [HttpPost("RegisterUser")]
+        [HttpPost]
         public async Task<IActionResult> RegisterUser()
         {
             return Ok();

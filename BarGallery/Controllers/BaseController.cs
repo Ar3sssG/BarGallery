@@ -1,5 +1,6 @@
 ﻿using BGDataLayer.DAL.Interfaces;
 using BGDataLayer.IdentityModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -7,7 +8,8 @@ using Microsoft.Extensions.Logging;
 namespace BarGallery.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class BaseController : ControllerBase
     {
         protected readonly ILogger<BaseController> _logger;

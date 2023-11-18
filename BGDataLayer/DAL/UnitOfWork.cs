@@ -6,15 +6,15 @@ namespace BGDataLayer.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private IMemoryCache _memoryCache;
-        public UnitOfWork(BGContext dbContext,IMemoryCache memoryCache)
+        //private IMemoryCache _memoryCache;
+        public UnitOfWork(BGContext dbContext/*,IMemoryCache memoryCache*/)
         {
             bgContext = dbContext;
-            _memoryCache = memoryCache;
+            //_memoryCache = memoryCache;
         }
 
         public BGContext bgContext { get; }
-        public IMemoryCache MemoryCache => _memoryCache;
+        //public IMemoryCache MemoryCache => _memoryCache;
 
         #region Repositories
 
