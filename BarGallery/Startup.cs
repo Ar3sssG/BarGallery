@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using BarGallery.Extensions;
 using Microsoft.IdentityModel.Tokens;
 using BGCommon.Helpers;
+using Microsoft.AspNetCore.Identity;
 
 namespace BarGallery
 {
@@ -40,7 +41,8 @@ namespace BarGallery
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireDigit = false;
             })
-              .AddEntityFrameworkStores<BGContext>();
+              .AddEntityFrameworkStores<BGContext>()
+              .AddDefaultTokenProviders();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
