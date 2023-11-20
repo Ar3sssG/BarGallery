@@ -1,4 +1,5 @@
 ﻿using BGCommon.Helpers;
+using BGCommon.Models.API.Response.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,7 +30,7 @@ namespace BarGallery.Extensions
                         context.Response.StatusCode = 401;
                         context.Response.Headers.Append("Content-Type", "application/json");
 
-                        var jsonResponse = JsonConvert.SerializeObject(new { StatusCode = 401, Message = "Unauthorized" });
+                        var jsonResponse = JsonConvert.SerializeObject(new UnauthorizedResponseModel { StatusCode = 401, Message = "Unauthorized" });
                         var data = Encoding.UTF8.GetBytes(jsonResponse);
 
                         // Write the bytes to the response body
