@@ -44,21 +44,10 @@ namespace BarGallery
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidIssuer = AuthOptions.ISSUER,
-                    ValidateAudience = true,
-                    ValidAudience = AuthOptions.AUDIENCE,
-                    ValidateLifetime = true,
-                    IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                    ValidateIssuerSigningKey = true,
-                };
-            });
+            services.ConfigureAuthentication();
 
             services.AddAuthorization();
+
             services.AddControllers();
 
             services.AddSwagger();
