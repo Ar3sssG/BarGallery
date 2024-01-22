@@ -1,14 +1,13 @@
 import { Button, Stack } from "@mui/material";
 interface IBasicButton {
     variant?: "contained" | "text" | "outlined",
-    title?: string
+    title?: string,
+    fullWidth?: boolean
 }
 
-const BasicButton = ({ variant = "contained", title = "Text" }: IBasicButton) => {
+const BasicButton = ({ variant = "contained", title = "Text", fullWidth = false }: IBasicButton) => {
     return (
-        <Stack spacing={2} direction="row">
-            <Button sx={{ textTransform: "none" }} variant={variant}>{title}</Button>
-        </Stack>
+        <Button sx={{ textTransform: "none" }} fullWidth={fullWidth} variant={variant}>{title}</Button>
     );
 }
 

@@ -11,6 +11,7 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="src\pages\Auth\SignIn\" />
     <Folder Include="src\pages\Home\" />
     <Folder Include="src\route\" />
     <Folder Include="src\shared\UI\" />

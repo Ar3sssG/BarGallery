@@ -1,19 +1,24 @@
 import {
+    Navigate,
     createBrowserRouter,
 } from "react-router-dom";
 
 import Home from "../pages/Home";
-//import Hi from "../pages/Hi";
+import Signin from "../pages/Auth/SignIn";
 
 const router = createBrowserRouter([
     {
-        path: "/",
+        path: "/home",
         element: <Home />,
     },
-    //{
-    //    path: "/hi",
-    //    element: <Hi />
-    //},
+    {
+        path: "/sign-in",
+        element: <Signin />
+    },
+    {
+        path: "*",
+        element: <Navigate to={"/sign-in" } />
+    },
 ]);
 
 export default router;
