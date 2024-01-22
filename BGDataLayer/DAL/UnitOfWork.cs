@@ -1,31 +1,64 @@
-﻿using BGDataLayer.DAL.Contexts;
+﻿using ASDataLayer.DAL;
+using BGDataLayer.DAL.DBContext;
 using BGDataLayer.DAL.Interfaces;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace BGDataLayer.DAL
 {
     public class UnitOfWork : IUnitOfWork
     {
-        //private IMemoryCache _memoryCache;
-        public UnitOfWork(BGContext dbContext/*,IMemoryCache memoryCache*/)
-        {
-            bgContext = dbContext;
-            //_memoryCache = memoryCache;
-        }
+        private BGContext _dbContext;
+        private NpgsqlTransaction _transaction;
 
-        public BGContext bgContext { get; }
-        //public IMemoryCache MemoryCache => _memoryCache;
+        public UnitOfWork(BGContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         #region Repositories
 
-        private IUserRepository _userRepository;
-        public IUserRepository UserRepository => _userRepository != null ? _userRepository : new UserRepository(this);
+        private IRefreshTokenRepository _refreshTokenRepository;
+        public IRefreshTokenRepository RefreshTokenRepository => _refreshTokenRepository != null ? _refreshTokenRepository : new RefreshTokenRepository(_transaction,_dbContext);
 
-        private ICategoryRepository _categoryRepository;
-        public ICategoryRepository CategoryRepository => _categoryRepository != null ? _categoryRepository : new CategoryRepository(this);
+        #endregion
 
-        private IProductRepository _productRepository;
-        public IProductRepository ProductRepository => _productRepository != null ? _productRepository : new ProductRepository(this);
+        #region SaveChanges
+        public int SaveChanges()
+        {
+            return _dbContext.SaveChanges();
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
+        #endregion
+
+        #region Transaction
+        public async Task<NpgsqlTransaction> BeginTransaction()
+        {
+            NpgsqlConnection connection = new NpgsqlConnection(_dbContext.Database.GetConnectionString());
+            connection.Open();
+
+            _transaction = await connection.BeginTransactionAsync();
+
+            return _transaction;
+        }
+
+        public async Task CommitTrasnactionAsync()
+        {
+            if (_transaction == null)
+            {
+            }
+
+            await _transaction.CommitAsync();
+        }
+
+        public async Task RollBackTrasnactionAsync()
+        {
+            await _transaction.RollbackAsync();
+        }
 
         #endregion
     }

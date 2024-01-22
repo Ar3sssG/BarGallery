@@ -1,10 +1,26 @@
-﻿
+﻿using Npgsql;
+
 namespace BGDataLayer.DAL.Interfaces
 {
     public interface IUnitOfWork
     {
-        IUserRepository UserRepository { get; }
-        ICategoryRepository CategoryRepository { get; }
-        IProductRepository ProductRepository { get; }
+        #region RepositoryInterfaces
+        IRefreshTokenRepository RefreshTokenRepository { get; }
+        #endregion
+
+        #region SAVE CHANGES
+
+        Task<int> SaveChangesAsync();
+        int SaveChanges();
+
+        #endregion SAVE CHANGES
+
+        #region TRANSACTION
+
+        Task<NpgsqlTransaction> BeginTransaction();
+        Task CommitTrasnactionAsync();
+        Task RollBackTrasnactionAsync();
+
+        #endregion TRANSACTION
     }
 }
