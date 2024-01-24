@@ -2,34 +2,60 @@ import { Box, Stack } from "@mui/material";
 import BasicButton from "../../../shared/UI/Button";
 import InputField from "../../../shared/UI/Input";
 import CustomCheckBox from "../../../shared/UI/Checkbox";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
+
+const url = "https://example.com/answer";
 
 const Signin = () => {
-    const [value, setValue] = useState({
-        username:"",
-        password:"",
-        remember:false
-    });
+    const [inputValue, setInputValue] = useState({
+        username: "",
+        password: "",
+    })
+    const [checkboxValue, setCheckboxValue] = useState(
+        false
 
-    const onChange = (e: any) => {
-        setValue({
-            ...value,
-            [e.target.name]:e.target.value
-        })
-        console.log(e.target.value)
+    )
+
+    const onCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setCheckboxValue(e.target.checked)
+
     }
+    const onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue({
+            ...inputValue,
+            [e.target.name]: e.target.value
+        })
+    }
+    const handleFetchData = async() => {
+        const response = await fetch(url,{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({...inputValue,checkboxValue})
+        })
+        const res = response.json()
+        console.log(res)
+    }
+
+    const onClick =  (e: MouseEvent) => {
+        handleFetchData()
+    }
+
     return (
         <>
             <Box sx={{ height: "50vh", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                <h1>SIGN IN</h1>
-                <Stack spacing={2}>
-                    <InputField label="Username" variant="standard" value={value.username} onChange={onChange} name="username"/>
-                    <InputField label="Password" variant="standard" value={value.password} onChange={onChange} name="password" />
-                    <CustomCheckBox label="Remember me" value={value.remember} onChange={onChange}/>
-                    <BasicButton title="Sign in" fullWidth />
+                <h1>BarGallery Admin</h1>
+                <h2>Sign in</h2>
+                <Stack spacing={2} sx={{ width: "20vw" }}>
+                    <InputField label="Username" variant="filled" value={inputValue.username} onChange={onInputChange} name="username" />
+                    <InputField label="Password" variant="filled" value={inputValue.password} onChange={onInputChange} name="password" type="password" />
+                    <CustomCheckBox label="Remember me" value={checkboxValue} onChange={onCheckboxChange} />
+                    <BasicButton title="Sign in" fullWidth onClick={onClick} />
                 </Stack>
+                <p>Copyright © BarGallery 2024.</p>
+                <p>Hello world!</p>
             </Box>
-
         </>
     );
 }
