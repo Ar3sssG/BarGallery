@@ -45,7 +45,7 @@ const Signin = () => {
     return (
         <>
             <Box sx={{ height: "50vh", display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center" }}>
-                <h1>BarGallery Admin</h1>
+                <h1>BarGallery Admin ADMIN ADMIN</h1>
                 <h2>Sign in</h2>
                 <Stack spacing={2} sx={{ width: "20vw" }}>
                     <InputField label="Username" variant="filled" value={inputValue.username} onChange={onInputChange} name="username" />
