@@ -38,7 +38,7 @@ const Signin = () => {
         console.log(res)
     }
 
-    const onClick =  (e: MouseEvent) => {
+    const onClick =  (e: React.MouseEvent) => {
         handleFetchData()
     }
 
